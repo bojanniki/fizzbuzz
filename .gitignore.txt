@@ -1,0 +1,14 @@
+# Node.js
+node_modules/
+
+# Editor files
+.vscode/
+*.suo
+*.user
+
+# Build artifacts
+dist/
+
+# Temporary files
+*.tmp
+*~
