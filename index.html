@@ -9,15 +9,59 @@
   <body>
     <div class="header">
       <h1 class="mainTitle">Elaborate fizzBuzz</h1>
+      <button class="button" onclick="showInstructions()">
+        Show instructions
+      </button>
+
+      <div id="instructions"><p>This div is for the instructions</p></div>
     </div>
     <div class="row">
-      <div class="column" style="background-color: #aaa">Inputs</div>
-      <div class="column" style="background-color: #bbb">Display</div>
-      <div class="column" style="background-color: #ccc">Buttons</div>
+      <div class="column" style="background-color: #aaa">
+        <input
+          class="input"
+          type="number"
+          placeholder="Enter start number"
+          id="start-input"
+        />
+        <input
+          class="input"
+          type="number"
+          placeholder="Enter stop number"
+          id="stop-input"
+        />
+        <input
+          class="input"
+          type="text"
+          placeholder="Enter fizz"
+          id="fizz-input"
+        />
+        <input
+          class="input"
+          type="text"
+          placeholder="Enter Buzz"
+          id="Buzz-input"
+        />
+        <input
+          class="input"
+          type="text"
+          placeholder="Enter fizzBuzz"
+          id="fizzBuzz-input"
+        />
+      </div>
+      <div class="column" style="background-color: #bbb">
+        <div id="display">This div is for the display.</div>
+      </div>
+      <div id="buttons" class="column" style="background-color: #ccc">
+        <button>Play</button>
+        <button>Pause</button>
+        <button>Reset</button>
+      </div>
     </div>
 
     <div class="footer">
-      <p>Footer</p>
+      <p>Created by: Bojan</p>
+      <p>Press the instructions button to view instructions</p>
+      <p>fizzBuzz Game v1.0</p>
     </div>
     <script src="javascript.js"></script>
   </body>

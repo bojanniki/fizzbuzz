@@ -16,6 +16,22 @@ body {
   font-size: 10px;
   margin: auto;
 }
+/* Container for instructions */
+#instructions {
+  width: 100%;
+  padding: 50px 0;
+  text-align: center;
+  background-color: #aaa;
+  margin-top: 20px;
+}
+
+/* Container for display*/
+#display {
+  width: 100%;
+  padding: 50px 0;
+  text-align: center;
+  background-color: #aaa;
+}
 /* Container for flexboxes */
 .row {
   display: flex;
@@ -23,9 +39,12 @@ body {
 
 /* Create three equal columns that sits next to each other */
 .column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   flex: 1;
   padding: 10px;
-  height: 300px; /* Should be removed. Only for demonstration */
+  height: 300px;
 }
 
 /* Style the footer */
