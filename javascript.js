@@ -9,16 +9,23 @@ function showInstructions() {
 }
 
 let displayElement = document.getElementById("display");
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 async function fizzBuzz() {
-  // input values
+  document.getElementById("startInput").disabled = true; //locked the inputs at the start of the function
+  document.getElementById("stopInput").disabled = true;
+  document.getElementById("fizzInput").disabled = true;
+  document.getElementById("buzzInput").disabled = true;
+  document.getElementById("fizzBuzzInput").disabled = true;
+  document.getElementById("fizzNumber").disabled = true;
+  document.getElementById("buzzNumber").disabled = true;
   let startNumber = parseFloat(document.getElementById("startInput").value);
   let stopNumber = parseFloat(document.getElementById("stopInput").value);
+  let fizzNumber = parseFloat(document.getElementById("fizzNumber").value);
+  let buzzNumber = parseFloat(document.getElementById("buzzNumber").value);
   let fizz = document.getElementById("fizzInput").value || "Fizz"; // fizz is default
   let buzz = document.getElementById("buzzInput").value || "Buzz"; // Buzz is default
   let fizzBuzz = document.getElementById("fizzBuzzInput").value || "FizzBuzz"; // fizzBuzz is default
-  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms)); // Delay function
-
   // input validations
   if (isNaN(startNumber) || isNaN(stopNumber)) {
     displayElement.textContent = "Please enter valid numbers for the range.";
@@ -36,12 +43,14 @@ async function fizzBuzz() {
 
   // fizzBuzz logic
   for (let i = startNumber; i <= stopNumber; i++) {
+    // input values
+
     let result = "";
-    if (i % 3 === 0 && i % 5 === 0) {
+    if (i % fizzNumber === 0 && i % buzzNumber === 0) {
       result = fizzBuzz;
-    } else if (i % 3 === 0) {
+    } else if (i % fizzNumber === 0) {
       result = fizz;
-    } else if (i % 5 === 0) {
+    } else if (i % buzzNumber === 0) {
       result = buzz;
     } else {
       result = i;
@@ -49,6 +58,6 @@ async function fizzBuzz() {
 
     // Output the result with a delay
     displayElement.textContent = result;
-    await delay(500); // Add a delay of 500 ms
+    await delay(1000); // Add a delay of 1000 ms
   }
 }
