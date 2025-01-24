@@ -7,29 +7,48 @@ function showInstructions() {
     instructions.style.display = "none";
   }
 }
-let isPaused = false;
-let isStopped = false;
-let displayElement = document.getElementById("display");
-function fizzBuzz() {
-  let startNumber = parseFloat(document.getElementById("start-input").value);
-  let stopNumber = parseFloat(document.getElementById("stop-input").value);
-  let fizz = document.getElementById("fizz-input").value;
-  let buzz = document.getElementById("Buzz-input").value;
-  let fizzBuzz = document.getElementById("fizzBuzz-input").value;
-  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms)); //created the delay
-  displayElement.textContent = ""; //Clearing the display at the start
 
-  const stopButton = document.getElementById("stopButton"); //created the stop button
-  stopButton.addEventListener("click", () => {
-    isStopped = true; // Set the flag to true when the button is clicked
-    displayElement.textContent = "Loop stopped";
-  });
-}
-if (
-  !Number.isInteger(startNumber) ||
-  !Number.isInteger(stopNumber) ||
-  startNumber <= 0 ||
-  stopNumber <= 0
-) {
-  displayElement.textContent = "Please input a positive integer";
+let displayElement = document.getElementById("display");
+
+async function fizzBuzz() {
+  // input values
+  let startNumber = parseFloat(document.getElementById("startInput").value);
+  let stopNumber = parseFloat(document.getElementById("stopInput").value);
+  let fizz = document.getElementById("fizzInput").value || "Fizz"; // fizz is default
+  let buzz = document.getElementById("buzzInput").value || "Buzz"; // Buzz is default
+  let fizzBuzz = document.getElementById("fizzBuzzInput").value || "FizzBuzz"; // fizzBuzz is default
+  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms)); // Delay function
+
+  // input validations
+  if (isNaN(startNumber) || isNaN(stopNumber)) {
+    displayElement.textContent = "Please enter valid numbers for the range.";
+    return;
+  }
+
+  if (startNumber > stopNumber) {
+    displayElement.textContent =
+      "Start number should be less than or equal to the stop number.";
+    return;
+  }
+
+  // display clear at the start
+  displayElement.textContent = "";
+
+  // fizzBuzz logic
+  for (let i = startNumber; i <= stopNumber; i++) {
+    let result = "";
+    if (i % 3 === 0 && i % 5 === 0) {
+      result = fizzBuzz;
+    } else if (i % 3 === 0) {
+      result = fizz;
+    } else if (i % 5 === 0) {
+      result = buzz;
+    } else {
+      result = i;
+    }
+
+    // Output the result with a delay
+    displayElement.textContent = result;
+    await delay(500); // Add a delay of 500 ms
+  }
 }

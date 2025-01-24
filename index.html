@@ -21,39 +21,47 @@
           class="input"
           type="number"
           placeholder="Enter start number"
-          id="start-input"
+          id="startInput"
+          required
         />
         <input
           class="input"
           type="number"
           placeholder="Enter stop number"
-          id="stop-input"
+          id="stopInput"
+          required
         />
         <input
           class="input"
           type="text"
           placeholder="Enter fizz"
-          id="fizz-input"
+          id="fizzInput"
+          required
         />
         <input
           class="input"
           type="text"
           placeholder="Enter Buzz"
-          id="Buzz-input"
+          id="buzzInput"
+          required
         />
         <input
           class="input"
           type="text"
           placeholder="Enter fizzBuzz"
-          id="fizzBuzz-input"
+          id="fizzBuzzInput"
+          required
         />
       </div>
       <div class="column" style="background-color: #bbb">
         <div id="display"></div>
       </div>
       <div id="buttons" class="column" style="background-color: #ccc">
-        <button class="button" id="startButton">Start</button>
+        <button onclick="fizzBuzz()" class="button" id="startButton">
+          Start
+        </button>
         <button class="button" id="stopButton">Stop</button>
+        <button class="button" id="resumeButton">Resume</button>
         <button class="button" id="pauseButton">Pause</button>
         <button class="button" id="resetButton">Reset</button>
       </div>
