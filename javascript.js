@@ -14,6 +14,8 @@ document.getElementById("stopButton").disabled = true; //locked buttons before t
 document.getElementById("pauseButton").disabled = true;
 document.getElementById("resumeButton").disabled = true;
 let isStopped = false;
+let isPaused = false;
+let currentNumber = null;
 
 async function fizzBuzz() {
   document.getElementById("startInput").disabled = true; //locked the inputs at the start of the function
@@ -34,7 +36,15 @@ async function fizzBuzz() {
   let buzzNumber = parseFloat(document.getElementById("buzzNumber").value);
   let fizz = document.getElementById("fizzInput").value || "Fizz"; // fizz is default
   let buzz = document.getElementById("buzzInput").value || "Buzz"; // Buzz is default
-  let fizzBuzz = document.getElementById("fizzBuzzInput").value || "FizzBuzz"; // fizzBuzz is default
+  let fizzBuzz = document.getElementById("fizzBuzzInput").value || "FizzBuzz";
+  let start;
+
+  if (currentNumber !== null) {
+    //assign a value to the start variable based on whether the currentNumber has a value or not.
+    start = currentNumber;
+  } else {
+    start = startNumber;
+  } // Start from current number if paused
 
   // input validations
   if (isNaN(startNumber) || isNaN(stopNumber)) {
@@ -52,10 +62,14 @@ async function fizzBuzz() {
   displayElement.textContent = "";
 
   // fizzBuzz logic
-  for (let i = startNumber; i <= stopNumber; i++) {
+  for (let i = start; i <= stopNumber; i++) {
     // input values
     if (isStopped == true) {
       break;
+    }
+    if (isPaused == true) {
+      currentNumber = i; // Save the current number when paused
+      return;
     }
     let result = "";
     if (i % fizzNumber === 0 && i % buzzNumber === 0) {
@@ -88,7 +102,7 @@ resetButton.addEventListener("click", async function () {
   displayElement.textContent = "Reset button pressed";
   await delay(1000);
   displayElement.textContent = "";
-  document.getElementById("startButton").disabled = false; //Reset input and button conditions
+  document.getElementById("startButton").disabled = false;
   document.getElementById("resetButton").disabled = false;
   document.getElementById("startInput").disabled = false;
   document.getElementById("stopInput").disabled = false;
@@ -104,4 +118,48 @@ resetButton.addEventListener("click", async function () {
   document.getElementById("fizzInput").value = "";
   document.getElementById("buzzInput").value = "";
   document.getElementById("fizzBuzzInput").value = "";
+  currentNumber = null;
+  isStopped = false; // Reset the stop flag
+  isPaused = false; // Reset the pause flag
+  // Call fizzBuzz to start the sequence after reset
+});
+const pauseButton = document.getElementById("pauseButton"); // reset button functionality
+pauseButton.addEventListener("click", async function () {
+  isPaused = true;
+  displayElement.textContent =
+    "Pause button pressed, press resume button to resume the fizzBuzz";
+  document.getElementById("startInput").disabled = true; //Pause button conditions
+  document.getElementById("stopInput").disabled = true;
+  document.getElementById("fizzInput").disabled = true;
+  document.getElementById("buzzInput").disabled = true;
+  document.getElementById("fizzBuzzInput").disabled = true;
+  document.getElementById("fizzNumber").disabled = true;
+  document.getElementById("buzzNumber").disabled = true;
+  document.getElementById("startButton").disabled = true;
+  document.getElementById("stopButton").disabled = true;
+  document.getElementById("resetButton").disabled = true;
+  document.getElementById("resumeButton").disabled = false;
+  document.getElementById("pauseButton").disabled = false;
+});
+
+const resumeButton = document.getElementById("resumeButton"); // Resume button functionality
+resumeButton.addEventListener("click", async function () {
+  isPaused = false; // Reset the pause flag
+
+  // Re-enable the inputs and buttons that were disabled during pause
+  document.getElementById("startInput").disabled = true;
+  document.getElementById("stopInput").disabled = true;
+  document.getElementById("fizzInput").disabled = true;
+  document.getElementById("buzzInput").disabled = true;
+  document.getElementById("fizzBuzzInput").disabled = true;
+  document.getElementById("fizzNumber").disabled = true;
+  document.getElementById("buzzNumber").disabled = true;
+  document.getElementById("startButton").disabled = true;
+  document.getElementById("stopButton").disabled = true;
+  document.getElementById("resetButton").disabled = true;
+  document.getElementById("pauseButton").disabled = true;
+  document.getElementById("resumeButton").disabled = true;
+
+  // Call the fizzBuzz function to continue where it left off
+  fizzBuzz();
 });
