@@ -60,7 +60,6 @@ let currentNumber = null;
  * - outputs to the display element with a delay of 1000 ms
  */
 async function fizzBuzz() {
-  setUpInitialState();
   let startNumber = parseFloat(document.getElementById("startInput").value);
   let stopNumber = parseFloat(document.getElementById("stopInput").value);
   let fizzNumber = parseFloat(document.getElementById("fizzNumber").value);
@@ -87,7 +86,7 @@ async function fizzBuzz() {
       "Start number should be less than or equal to the stop number.";
     return;
   }
-
+  setUpInitialState();
   displayElement.textContent = "";
   for (let i = start; i <= stopNumber; i++) {
     if (isStopped == true) {

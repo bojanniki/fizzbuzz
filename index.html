@@ -8,7 +8,7 @@
   </head>
   <body>
     <div class="header">
-      <h1 class="mainTitle">Elaborate fizzBuzz</h1>
+      <h1 class="mainTitle">fizzBuzz</h1>
       <button
         class="button"
         id="instructionsButton"
@@ -17,7 +17,25 @@
         Show instructions
       </button>
 
-      <div id="instructions"><p>This div is for the instructions</p></div>
+      <div id="instructions">
+        <ol>
+          <li>Set the Range: Enter a start and an end number.</li>
+          <li>
+            Configure FizzBuzz: Enter your Fizz and Buzz numbers. Optionally,
+            add custom labels for Fizz, Buzz, and FizzBuzz.
+          </li>
+          <li>
+            Play the Game: Click Start to begin counting. Numbers will update
+            every second: Shows FizzBuzz if divisible by both, Fizz if divisible
+            by the Fizz number, Buzz if divisible by the Buzz number, Otherwise,
+            the number itself.
+          </li>
+          <li>
+            Control: Pause/Resume the game anytime. Click Stop to end the game.
+            Use Reset to clear and start over.
+          </li>
+        </ol>
+      </div>
     </div>
     <div class="row">
       <div class="column" style="background-color: #aaa">
@@ -26,49 +44,42 @@
           type="number"
           placeholder="Enter start number"
           id="startInput"
-          required
         />
         <input
           class="input"
           type="number"
           placeholder="Enter stop number"
           id="stopInput"
-          required
         />
         <input
           class="input"
           type="number"
           placeholder="Enter fizz number"
           id="fizzNumber"
-          required
         />
         <input
           class="input"
           type="number"
           placeholder="Enter buzz number"
           id="buzzNumber"
-          required
         />
         <input
           class="input"
           type="text"
           placeholder="Enter fizz"
           id="fizzInput"
-          required
         />
         <input
           class="input"
           type="text"
           placeholder="Enter Buzz"
           id="buzzInput"
-          required
         />
         <input
           class="input"
           type="text"
           placeholder="Enter fizzBuzz"
           id="fizzBuzzInput"
-          required
         />
       </div>
       <div class="column" style="background-color: #bbb">
