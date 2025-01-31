@@ -4,16 +4,15 @@
  * Updates the button text accordingly.
  */
 
-function showInstructions() {
+function toggleInstructions() {
   const instructions = document.getElementById("instructions");
   const instructionsButton = document.getElementById("instructionsButton");
-  if (instructions.style.display === "none") {
-    instructions.style.display = "block";
-    instructionsButton.textContent = "Hide Instructions";
-  } else {
-    instructions.style.display = "none";
-    instructionsButton.textContent = "Show Instructions";
-  }
+
+  const isHidden = instructions.style.display === "none";
+  instructions.style.display = isHidden ? "block" : "none";
+  instructionsButton.textContent = isHidden
+    ? "Hide Instructions"
+    : "Show Instructions";
 }
 
 /**
@@ -28,10 +27,12 @@ function showInstructions() {
  */
 
 let displayElement = document.getElementById("display");
-const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 document.getElementById("stopButton").disabled = true;
 document.getElementById("pauseButton").disabled = true;
 document.getElementById("resumeButton").disabled = true;
+
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 let isStopped = false;
 let isPaused = false;
 let currentNumber = null;
@@ -40,7 +41,7 @@ let currentNumber = null;
  * Starts the FizzBuzz game by disabling input fields and enabling control buttons.
  *
  * - Disables input fields and buttons to prevent changes during execution.
- * - Enables the stop and pause buttons for user control.
+ * - sets the inital state of buttons and inputs using the setUpInitialState function
  * - Retrieves user inputs, including start and stop numbers, Fizz/Buzz conditions, and custom labels.
  * - If the game was paused, resumes from the last processed number (`currentNumber`).
  * - Checks if either `startNumber` or `stopNumber` is not a valid number.
@@ -59,25 +60,16 @@ let currentNumber = null;
  * - outputs to the display element with a delay of 1000 ms
  */
 async function fizzBuzz() {
-  document.getElementById("startInput").disabled = true;
-  document.getElementById("stopInput").disabled = true;
-  document.getElementById("fizzInput").disabled = true;
-  document.getElementById("buzzInput").disabled = true;
-  document.getElementById("fizzBuzzInput").disabled = true;
-  document.getElementById("fizzNumber").disabled = true;
-  document.getElementById("buzzNumber").disabled = true;
-  document.getElementById("startButton").disabled = true;
-  document.getElementById("resetButton").disabled = true;
-  document.getElementById("stopButton").disabled = false;
-  document.getElementById("pauseButton").disabled = false;
+  setUpInitialState();
   let startNumber = parseFloat(document.getElementById("startInput").value);
   let stopNumber = parseFloat(document.getElementById("stopInput").value);
   let fizzNumber = parseFloat(document.getElementById("fizzNumber").value);
   let buzzNumber = parseFloat(document.getElementById("buzzNumber").value);
+  let start;
+
   let fizz = document.getElementById("fizzInput").value || "Fizz";
   let buzz = document.getElementById("buzzInput").value || "Buzz";
   let fizzBuzz = document.getElementById("fizzBuzzInput").value || "fizzBuzz";
-  let start;
 
   if (currentNumber !== null) {
     start = currentNumber;
@@ -127,7 +119,7 @@ async function fizzBuzz() {
  * - Adds an event listener to the stop button.
  * - Sets `isStopped` to `true`, stopping the game loop.
  * - Updates the display to indicate the program has stopped.
- * - Disables the start, stop, pause, and resume buttons.
+ * - Uses the stopButtonState function to set the states of the buttons and inputs
  * - Enables the reset button to allow restarting the game.
  */
 
@@ -135,11 +127,7 @@ const stopButton = document.getElementById("stopButton");
 stopButton.addEventListener("click", function () {
   isStopped = true;
   displayElement.textContent = "Stop button pressed";
-  document.getElementById("startButton").disabled = true;
-  document.getElementById("stopButton").disabled = true;
-  document.getElementById("resumeButton").disabled = true;
-  document.getElementById("pauseButton").disabled = true;
-  document.getElementById("resetButton").disabled = false;
+  stopButtonState();
 });
 
 /**
@@ -148,7 +136,7 @@ stopButton.addEventListener("click", function () {
  * - Adds an event listener to the reset button.
  * - Displays a reset message for 1000ms, then clears the display.
  * - Re-enables all input fields and buttons for a new game.
- * - Clears all input values to reset the game state.
+ * - Uses the resetButtonState function to set the states of the buttons and inputs
  * - Sets `currentNumber` to `null` and resets `isStopped` and `isPaused` to `false`.
  */
 
@@ -157,6 +145,67 @@ resetButton.addEventListener("click", async function () {
   displayElement.textContent = "Reset button pressed";
   await delay(1000);
   displayElement.textContent = "";
+  resetButtonState();
+  currentNumber = null;
+  isStopped = false;
+  isPaused = false;
+});
+
+/**
+ * Handles the pause button functionality.
+ *
+ * - Adds an event listener to the pause button.
+ * - Sets `isPaused` to `true`, stopping the current execution.
+ * - Displays a message instructing the user to press "Resume" to continue.
+ * - Uses the pauseButtonState function to set the states of the buttons and inputs
+ */
+
+const pauseButton = document.getElementById("pauseButton"); // reset button functionality
+pauseButton.addEventListener("click", async function () {
+  isPaused = true;
+  displayElement.textContent =
+    "Pause button pressed, press resume button to resume the fizzBuzz";
+  pauseButtonState();
+});
+
+/**
+ * Handles the resume button functionality.
+ *
+ * - Sets `isPaused` to `false`, allowing the FizzBuzz game to resume.
+ * - Uses the resumeButtonState function to set the states of the buttons and inputs
+ * - Calls the `fizzBuzz` function to continue the game from where it was paused.
+ */
+const resumeButton = document.getElementById("resumeButton");
+resumeButton.addEventListener("click", async function () {
+  isPaused = false;
+  resumeButtonState();
+  fizzBuzz();
+});
+/**
+ * Functions for states
+ * - Enabling and disabling buttons and inputs depending on the button pressed
+ */
+function setUpInitialState() {
+  document.getElementById("startInput").disabled = true;
+  document.getElementById("stopInput").disabled = true;
+  document.getElementById("fizzInput").disabled = true;
+  document.getElementById("buzzInput").disabled = true;
+  document.getElementById("fizzBuzzInput").disabled = true;
+  document.getElementById("fizzNumber").disabled = true;
+  document.getElementById("buzzNumber").disabled = true;
+  document.getElementById("startButton").disabled = true;
+  document.getElementById("resetButton").disabled = true;
+  document.getElementById("stopButton").disabled = false;
+  document.getElementById("pauseButton").disabled = false;
+}
+function stopButtonState() {
+  document.getElementById("startButton").disabled = true;
+  document.getElementById("stopButton").disabled = true;
+  document.getElementById("resumeButton").disabled = true;
+  document.getElementById("pauseButton").disabled = true;
+  document.getElementById("resetButton").disabled = false;
+}
+function resetButtonState() {
   document.getElementById("startButton").disabled = false;
   document.getElementById("resetButton").disabled = false;
   document.getElementById("startInput").disabled = false;
@@ -173,25 +222,8 @@ resetButton.addEventListener("click", async function () {
   document.getElementById("fizzInput").value = "";
   document.getElementById("buzzInput").value = "";
   document.getElementById("fizzBuzzInput").value = "";
-  currentNumber = null;
-  isStopped = false;
-  isPaused = false;
-});
-
-/**
- * Handles the pause button functionality.
- *
- * - Adds an event listener to the pause button.
- * - Sets `isPaused` to `true`, stopping the current execution.
- * - Displays a message instructing the user to press "Resume" to continue.
- * - Disables all input fields and buttons except the resume button.
- */
-
-const pauseButton = document.getElementById("pauseButton"); // reset button functionality
-pauseButton.addEventListener("click", async function () {
-  isPaused = true;
-  displayElement.textContent =
-    "Pause button pressed, press resume button to resume the fizzBuzz";
+}
+function pauseButtonState() {
   document.getElementById("startInput").disabled = true;
   document.getElementById("stopInput").disabled = true;
   document.getElementById("fizzInput").disabled = true;
@@ -204,19 +236,8 @@ pauseButton.addEventListener("click", async function () {
   document.getElementById("resetButton").disabled = true;
   document.getElementById("resumeButton").disabled = false;
   document.getElementById("pauseButton").disabled = false;
-});
-
-/**
- * Handles the resume button functionality.
- *
- * - Sets `isPaused` to `false`, allowing the FizzBuzz game to resume.
- * - Disables all input fields and buttons to prevent further modifications.
- * - Calls the `fizzBuzz` function to continue the game from where it was paused.
- */
-const resumeButton = document.getElementById("resumeButton");
-resumeButton.addEventListener("click", async function () {
-  isPaused = false;
-
+}
+function resumeButtonState() {
   document.getElementById("startInput").disabled = true;
   document.getElementById("stopInput").disabled = true;
   document.getElementById("fizzInput").disabled = true;
@@ -229,5 +250,4 @@ resumeButton.addEventListener("click", async function () {
   document.getElementById("resetButton").disabled = true;
   document.getElementById("pauseButton").disabled = true;
   document.getElementById("resumeButton").disabled = true;
-  fizzBuzz();
-});
+}
